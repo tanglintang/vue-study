@@ -1,10 +1,16 @@
 <template>
-    <button class="el-button" :disabled="buttonDisabled" :type="buttonType" :class="[
+    <button class="el-button" :disabled="buttonDisabled" :type="nativeType" :class="[
             type ? 'el-button--' + type : '',
+            size ? 'el-button--' + size : '',
             {'is-disabled': buttonDisabled,
             'is-loading': loading,
+            'is-round': round,
+            'is-circle': circle,
+            'is-plain': plain,
             }
-        ]">
+        ]"
+        @click="handleClick"
+        >
         <i class="el-icon-loading" v-if="loading"></i>
         <i :class="icon" v-if="icon&&!loading"></i>
         <slot></slot>
@@ -29,6 +35,14 @@ export default {
         icon: String,
         default: ''
     },
+    nativeType: {
+        type: String,
+        default: 'defautl'
+    },
+    size: String,
+    round: Boolean,
+    circle: Boolean,
+    plain: Boolean,
   },
   computed: {
     buttonDisabled() {
@@ -39,6 +53,15 @@ export default {
         return this.type
     },
 
+    buttonSize() {
+        return this.size
+    },
+  },
+  methods: {
+      handleClick(event) {
+        //   console.log(event)
+          this.$emit('click', event)
+      }
   }
 };
 </script>
