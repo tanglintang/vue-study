@@ -6,10 +6,11 @@
 
     <!-- <p v-html="content"></p> -->
 
-    <ele-radio-group v-model="sex">
+    <!-- <ele-radio-group v-model="sex">
       <ele-radio label="0">女</ele-radio>
       <ele-radio label="男"></ele-radio>
-    </ele-radio-group>
+    </ele-radio-group> -->
+    <comment></comment>
   </div>
 </template>
 
@@ -21,6 +22,7 @@ import Markdown from "@/views/Markdown";
 import EleRadioGroup from '@/components/EleRadioGroup'
 import EleRadio from '@/components/EleRadio'
 
+import Comment from '@/components/Comment'
 
 
 export default {
@@ -29,7 +31,8 @@ export default {
     Login,
     Markdown,
     EleRadioGroup,
-    EleRadio
+    EleRadio,
+    Comment,
   },
   data() {
     return {
