@@ -28,7 +28,7 @@ export default {
   },
   methods: {
     addComment(msg) {
-      // this.totalData.shift() 从数组前插入，看需要
+      // this.totalData.unshift() 从数组前插入，看需要
       this.totalData.push({ text: msg });
       this.totalCount = this.totalData.length;
       if (this.totalCount <= this.pagesize) {
