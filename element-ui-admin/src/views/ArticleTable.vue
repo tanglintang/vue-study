@@ -1,7 +1,12 @@
 <template>
     <div class="app-container">
-      <div class="filter-container"></div>
-      <el-table :data="list" border style="width: 100%" highlight-current-row v-loading="listLoading">
+      <div class="filter-container">
+        <el-select v-model="listQuery.importance" placeholder="重要性" class="filter-item">
+          <el-option v-for="item in importanceOptions" :key="item" :value="item" :label="item"></el-option>
+        </el-select>
+        <el-button class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">查询</el-button>
+      </div>
+      <el-table :data="list" style="width: 100%" highlight-current-row v-loading="listLoading">
         <el-table-column label="序号" type="index" width="65" align="center">
           <!-- 模板作用域添加更多的内容 -->
           <template slot-scope="scope">
@@ -10,6 +15,7 @@
         </el-table-column>
         <el-table-column prop="date" label="日期" width="150" align="center"></el-table-column>
         <el-table-column prop="title" label="标题" min-width="150"></el-table-column>
+        <el-table-column prop="importance" label="重要性" width="150" align="center"></el-table-column>
         <el-table-column prop="author" label="作者" width="110" align="center"></el-table-column>
         <el-table-column prop="pageviews" label="阅读数" width="95" align="center"></el-table-column>
         <el-table-column label="操作" width="230" align="center" class-name="small-padding fixed-width">
@@ -19,7 +25,10 @@
           </template>
         </el-table-column>
       </el-table>
-      <div class="pagination-container"></div>
+      <div class="pagination-container">
+         <el-pagination :current-page="listQuery.page" :page-size="listQuery.limit" :total="total" layout="total, sizes, prev, pager, next, jumper" @current-change='handleCurrentChange' background></el-pagination>
+      </div>
+
       <el-dialog :visible.sync="dialogFormVisible" title="Edit">
         <el-form :model="temp" ref="tempForm" label-position="left" label-width="70" style="width: 400px; margin-left: 50px">
           <el-form-item label="标题" prop="title" required>
@@ -37,9 +46,6 @@
           <el-button @click="updateData('tempForm');dialogFormVisible=false" size="small" type="primary">保存</el-button>
         </div>
       </el-dialog>
-      <div class="vedio">
-
-      </div>
     </div>
 </template>
 
@@ -57,8 +63,9 @@ export default {
         type: undefined,
         sort: "+id",
         page: 1,
-        limit: 20
+        limit: 20,
       },
+      total: 0,
       dialogFormVisible: false,
       // 弹窗里的表单 的 model
       temp: {
@@ -71,46 +78,37 @@ export default {
         status: "published"
       },
       listLoading: false,
-    };
+      importanceOptions: [1, 2, 3]
+    }
   },
   methods: {
     getList() {
       fetchList(this.listQuery).then((response) => {
-        // console.log(response)
+        this.list = response.data.items
+        this.total = response.data.total
+        setTimeout(() => {
+        this.listLoading = false
+      }, 2000)
       })
     },
     handleUpdate(row) {
-      console.log(row);
-      Object.assign(this.temp, row);
+      console.log(row)
+      Object.assign(this.temp, row)
     },
     updateData(fn) {
+    },
+    handleCurrentChange(page) {
+      this.listQuery.page = page
+      this.getList()
+    },
+    handleFilter() {
+      this.listQuery.page = 1
+      this.getList()
     }
   },
   created() {
-    // 通常这个生命周期请求数据
     this.listLoading = true
     this.getList()
   },
-  beforeMount() {
-    this.listLoading = false
-    const first = {
-      id: 1,
-      date: "1999-09-09",
-      timestamp: "2 小时前",
-      title: "震惊！。。。",
-      author: "UC小编",
-      pageviews: 999
-    };
-    const sec = {
-      id: 2,
-      date: "1888-08-08",
-      timestamp: "2 小时前",
-      title: "【中文八级】中国人与丹麦人的口技大PK",
-      author: "UC小编",
-      pageviews: 999
-    };
-    // this.list.push(first)
-    this.list = [first, sec];
-  }
 };
 </script>
