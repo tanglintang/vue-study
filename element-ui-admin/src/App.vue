@@ -1,5 +1,7 @@
 <template>
   <div id="app">
+    <!-- <el-alert title="el-alert" type="success" show-icon></el-alert> -->
+    <ele-alert title="ele-alert" type="success" center v-if="hasErr" @close="doAlertClose"></ele-alert>
     <!-- <markdown></markdown> -->
 
     <!-- <login/> -->
@@ -11,7 +13,7 @@
       <ele-radio label="男"></ele-radio>
     </ele-radio-group> -->
     <!-- <comment></comment> -->
-    <article-table></article-table>
+    <!-- <article-table></article-table> -->
   </div>
 </template>
 
@@ -27,6 +29,7 @@ import Comment from '@/components/Comment'
 
 import ArticleTable from '@/views/ArticleTable'
 
+import EleAlert from '@/components/EleAlert'
 
 
 export default {
@@ -37,13 +40,25 @@ export default {
     EleRadioGroup,
     EleRadio,
     Comment,
-    ArticleTable
+    ArticleTable,
+    EleAlert
   },
   data() {
     return {
       sex: 0,
-      content: "<span>美团挂了，还有 UC</span>"
+      content: "<span>美团挂了，还有 UC</span>",
+      hasErr: false,
     };
+  },
+  mounted() {
+    setTimeout(() => {
+      this.hasErr = true
+    }, 2000)
+  },
+  methods: {
+    doAlertClose() {
+      console.log('close')
+    }
   }
 };
 </script>
