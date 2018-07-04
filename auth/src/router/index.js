@@ -6,6 +6,7 @@ import auth from '@/util/auth.js'
 import About from '@/views/About'
 import Dashboard from '@/views/Dashboard'
 import Login from '@/views/Login'
+import Logout from '@/views/Logout'
 
 Vue.use(Router)
 
@@ -34,6 +35,11 @@ export default new Router({
     {
       path: '/login',
       component: Login
+    },
+    {
+      path: '/logout',
+      component: Logout,
+      afterEnter: requireAuth
     },
     {
       path: '/about',

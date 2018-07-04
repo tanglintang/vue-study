@@ -4,15 +4,27 @@
     <router-link to="/">/</router-link>
     <router-link to="/about">About</router-link>
     <router-link to="/dashboard">Dashboard</router-link>
-    <router-link to="/login">Login</router-link>
+    <router-link to="/login" v-if="!login">Login</router-link>
+    <router-link to="/logout" v-if="login">Logout</router-link>
     </div>
     <router-view class="view"/>
   </div>
 </template>
 
 <script>
+import auth from '@/util/auth.js'
+
 export default {
-  name: 'App'
+  name: 'App',
+  data() {
+    return {
+      login: true,
+    }
+  },
+  beforeUpdate() {
+    console.log(auth.loggedIn())
+    this.login = auth.loggedIn() ? true : false
+  },
 }
 </script>
 
