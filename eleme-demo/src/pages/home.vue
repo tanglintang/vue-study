@@ -1,6 +1,6 @@
 <template>
     <div>
-        <head-top sign-up="home">
+        <head-top signUp="home">
             <span slot="logo" class="head_logo">ele.me</span>
         </head-top>
         <nav class="city_nav">
@@ -40,20 +40,27 @@ export default {
     // 获取城市 不准确 又耗时的 api
     // 阻塞组件渲染
     // 在挂载之后
-    mounted() {
-        cityGuess()
-            .then(res => res.json())
-            .then(data => {
-                console.log(data)
-                this.guessCityId = data.id
-                this.guessCity = data.name
-            })
-        hotCity()
-            .then(res => res.json())
-            .then(data => {
-                console.log(data)
-                this.hotCity = data
-            })
+    async mounted() {
+
+        const cityData = await cityGuess()
+        this.guessCityId = cityData.id
+        this.guessCity = cityData.name
+
+        this.hotCity = await hotCity()
+        
+        // cityGuess()
+        //     .then(res => res.json())
+        //     .then(data => {
+        //         console.log(data)
+        //         this.guessCityId = data.id
+        //         this.guessCity = data.name
+        //     })
+        // hotCity()
+        //     .then(res => res.json())
+        //     .then(data => {
+        //         console.log(data)
+        //         this.hotCity = data
+        //     })
     }
 }
 </script>
