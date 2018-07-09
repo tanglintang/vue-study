@@ -21,7 +21,7 @@
 <script>
 import header from '@/components/header/header'
 
-const response = require('./common/js/seller.json')
+const response = require('./common/data/seller.json')
 const ERR_OK = 0
 
 export default {

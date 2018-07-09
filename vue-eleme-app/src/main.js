@@ -29,6 +29,7 @@ const routes = [
 ]
 
 const router = new VueRouter({
+  // 设置路由的active样式
   linkActiveClass: 'active',
   routes
 })
