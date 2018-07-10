@@ -5,7 +5,7 @@
         recalc = function() {
             var clientWidth = docEl.clientWidth
             if (!clientWidth) return
-            console.log(clientWidth)
+            // console.log(clientWidth)
             docEl.style.fontSize = 20 * (clientWidth / 320) + 'px'
             // iphone5 字体 20px  16 rem
         }

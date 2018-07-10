@@ -26,6 +26,14 @@ export const currentCity = (cityid) => new Promise((resolve, reject) => {
     })
 })
 
+export const msiteFoodTypes = (geohash) => new Promise((resolve, reject) => {
+    http.get(`/v2/index_entry`, {
+        geohash,
+        group_type: '1',
+        'flags[]': 'F',
+    }).then(res => resolve(res.data))
+})
+
 
 
 // ---------------------------------------------------------------
