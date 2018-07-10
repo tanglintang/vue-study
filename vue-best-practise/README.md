@@ -21,6 +21,20 @@ children: [                     // 数组
 ]
 }
 ```
+- 子路由懒加载
+```js
+children: [
+    {
+        path: 'log-time',
+        // component: LogTime
+        // 懒加载
+        component: resolve => require(['@/components/LogTime.vue'], resolve)
+    }
+]
+```
 
 - css in js
 用 js 的方式引入 css
+
+- $route
+`$route.path` 当前路由对象的路径，会被解析为绝对路径

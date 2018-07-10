@@ -1,5 +1,10 @@
 <template>
-  <div>TimeEntries
+  <div>
+    <router-link v-if="$route.path !='/time-entries/log-time'" to="/time-entries/log-time" class="btn btn-primary">创建</router-link>
+    <div v-if="$route.path === '/time-entries/log-time'">
+      <h3>创建</h3>
+    </div>
+     <hr>
     <router-view />
       <div class="time-entries">
         <p v-if="!plans.length">
@@ -48,7 +53,12 @@ export default {
     }
   },
   methods: {
-    deletePlan (index) {}
+    deletePlan (index) {
+      // 减去总时间
+      this.$store.dispatch('decTotalTime', this.plans[index].totalTime)
+      // 删除计划
+      this.$store.dispatch('deletePlan', index)
+    }
   }
 }
 </script>
