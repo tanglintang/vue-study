@@ -6,9 +6,11 @@ import router from './router'
 import 'bootstrap/dist/css/bootstrap.css'
 import VueResource from 'vue-resource'
 import store from './store'
+import EventProxy from 'vue-event-proxy'
 
 Vue.config.productionTip = false
 Vue.use(VueResource)
+Vue.use(EventProxy)
 
 /* eslint-disable no-new */
 new Vue({

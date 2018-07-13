@@ -1,5 +1,6 @@
 <template>
   <div id="wrapper">
+    <main-component></main-component>
     <nav class="navbar navbar-default">
       <div class="container">
         <a href="" class="navbar-brand">
@@ -29,10 +30,11 @@
 
 <script>
 import SideBar from '@/components/SideBar'
+import MainComponent from '@/components/MainComponent'
 
 export default {
   name: 'App',
-  components: { SideBar }
+  components: { MainComponent, SideBar }
 }
 </script>
 
