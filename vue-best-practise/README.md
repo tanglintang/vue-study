@@ -60,3 +60,22 @@ this.$on('global:getTarget', index => {
     this.html = `第${index}个元素被点击了`
 })
 ```
+
+- watch 侦听器
+```js
+  watch: {
+    // firstName (newName, oldName) {
+    //   this.fullName = newName + ' · ' + this.lastName
+    // }
+    // 高级语法
+    firstName: {
+      handler (newName, oldName) {
+        this.fullName = newName + ' · ' + this.lastName
+      },
+      // 立即改变
+      immediate: true,
+      // 监听底层，不止一次
+      deep: true
+    }
+  }
+```
