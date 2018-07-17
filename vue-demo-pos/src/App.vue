@@ -17,6 +17,9 @@ export default {
 </script>
 
 <style>
+#app {
+  font-family: "Microsoft YaHei";
+}
 .main {
   float: left;
   width: 95%;
