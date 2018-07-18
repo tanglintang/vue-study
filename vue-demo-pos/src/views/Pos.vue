@@ -10,7 +10,7 @@
               <el-table-column align="center" prop="price" width="70" label="价格"></el-table-column>
               <el-table-column align="center" width="100" label="操作" fixed="right" >
                 <template slot-scope="scope">
-                  <el-button type="text" size="small">删除</el-button>
+                  <el-button type="text" size="small" @click="delSingleGood(scope.row)">删除</el-button>
                   <el-button type="text" size="small" @click="addOrderList(scope.row)">添加</el-button>
                 </template>
               </el-table-column>
@@ -22,8 +22,8 @@
             </div>
             <div style="text-align: center; margin-top: 20px;">
               <el-button type="warning">挂单</el-button>
-              <el-button type="danger">删除</el-button>
-              <el-button type="success">结账</el-button>
+              <el-button type="danger" @click="delAllGoods">删除</el-button>
+              <el-button type="success" @click="checkout">结账</el-button>
             </div>
           </el-tab-pane>
           <el-tab-pane label="挂单">
@@ -163,11 +163,46 @@ export default {
         }
         this.tableData.push(newGood)
       }
-      // 计算汇总金额和数量
-      this.tableData.forEach(ele => {
-        this.totalCount += ele.count
-        this.totalMoney = this.totalMoney + (ele.price*ele.count)
-      })
+
+      this.getAllMoney()
+    },
+
+    delSingleGood(good) {
+      this.tableData = this.tableData.filter(item => item.goodsId != good.goodsId)
+      this.getAllMoney()
+    },
+
+    delAllGoods() {
+      this.tableData = []
+      this.totalMoney = 0
+      this.totalCount = 0
+    },
+
+    // 计算汇总金额和数量
+    getAllMoney() {
+      this.totalMoney = 0
+      this.totalCount = 0
+
+      if (this.tableData) {
+        this.tableData.forEach(ele => {
+          this.totalCount += ele.count
+          this.totalMoney = this.totalMoney + (ele.price*ele.count)
+        })
+      }
+    },
+
+    // 结账
+    checkout() {
+      if (this.totalCount != 0) {
+        this.delAllGoods()
+
+        this.$message({
+          message: '结账成功！',
+          type: 'success'
+        })
+      } else {
+        this.$message.error('么有订单')
+      }
     }
   }
 }
